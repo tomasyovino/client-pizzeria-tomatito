@@ -6,7 +6,7 @@ import {
     ShoppingCartIcon
 } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
-import logo from "../../assets/tomatito.png";
+import logo from "../assets/tomatito.png";
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
