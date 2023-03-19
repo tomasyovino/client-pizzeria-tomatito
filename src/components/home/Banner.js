@@ -31,9 +31,9 @@ const Banner = () => {
                     <h1 className="text-4xl lg:text-9xl font-semibold">TOMATITO</h1>
                     <a href="#menu" className="border border-[#ff770f] text-[#ff770f] p-3 rounded mt-14 text-md font-semibold leading-6 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">Ver Menú</a>
                     <div className="container mx-auto flex items-center justify-center lg:justify-between mt-6 gap-4">
-                        <span class="block p-px bg-white w-1/3"></span>
+                        <span className="block p-px bg-white w-1/3"></span>
                         <h3 className="text-sm md:text-2xl font-semibold w-1/3 text-center">Buon Appetito | Piatto Pulito</h3>
-                        <span class="block p-px bg-white w-1/3"></span>
+                        <span className="block p-px bg-white w-1/3"></span>
                     </div>
                 </div>
                 <div>
