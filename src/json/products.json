@@ -1,0 +1,44 @@
+[
+    {
+        "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
+        "category": "pizza",
+        "name": "Pizza Muzzarela",
+        "price": 1500,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
+        "category": "pizza",
+        "name": "Pizza Napolitana",
+        "price": 2500,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
+        "category": "pizza",
+        "name": "Pizza c/ Jamón y Morrones",
+        "price": 2300,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
+        "category": "pie",
+        "name": "Empanada de J&Q",
+        "price": 500,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
+        "category": "pie",
+        "name": "Empanada de Pollo",
+        "price": 500,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    },
+    {
+        "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
+        "category": "pie",
+        "name": "Empanada de Carne",
+        "price": 500,
+        "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
+    }
+]
