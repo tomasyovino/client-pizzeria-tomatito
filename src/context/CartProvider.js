@@ -10,10 +10,29 @@ const CartProvider = ({ children }) => {
         if (cartInfo) setCart(cartInfo);
     }, []);
 
+    const addToCart = (product) => {
+        const existingProduct = cart.find((p) => p._id === product._id);
+        if (existingProduct) {
+            const updatedCart = cart.map((p) => {
+                if (p._id === product._id) {
+                    return {
+                        ...p,
+                        quantity: p.quantity + product.quantity
+                    };
+                };
+                return p;
+            });
+            setCart(updatedCart);
+        } else {
+            setCart([...cart, product]);
+        };
+    };
+    
     return <CartContext.Provider
         value={{
             cart,
-            setCart
+            setCart,
+            addToCart
         }}
     >
         { children }

@@ -3,10 +3,11 @@ import { Dialog, Popover, } from '@headlessui/react';
 import {
     Bars3Icon,
     XMarkIcon,
-    ShoppingCartIcon
 } from '@heroicons/react/24/outline';
 import { Link } from 'react-router-dom';
+import { HashLink } from "react-router-hash-link";
 import logo from "../assets/tomatito.png";
+import CartBadge from './CartBadge';
 
 const Navbar = () => {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -31,14 +32,14 @@ const Navbar = () => {
                     </button>
                 </div>
                 <Popover.Group className="hidden lg:flex lg:gap-x-12">
-                    <a href="/#menu" className="text-sm font-semibold leading-6 text-gray-900 ease-in-out duration-300 hover:text-[#ff770f]">
+                    <HashLink to={"/#menu"} className="text-sm font-semibold leading-6 text-gray-900 ease-in-out duration-300 hover:text-[#ff770f]">
                         Menú
-                    </a>
+                    </HashLink>
                     <Link to="/contact" className="text-sm font-semibold leading-6 text-gray-900 ease-in-out duration-300 hover:text-[#ff770f]">
                         Contacto
                     </Link>
                     <Link to="/cart" className="text-sm font-semibold leading-6 text-gray-900 ease-in-out duration-300 hover:text-[#ff770f]">
-                        <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                        <CartBadge />
                     </Link>
                 </Popover.Group>
             </nav>
@@ -67,12 +68,12 @@ const Navbar = () => {
                     <div className="mt-6 flow-root">
                         <div className="-my-6 divide-y divide-gray-500/10">
                             <div className="space-y-2 py-6">
-                                <a
-                                    href="/#menu"
+                                <HashLink
+                                    to={"/#menu"}
                                     className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
                                     Menu
-                                </a>
+                                </HashLink>
                                 <Link
                                     to="/contact"
                                     className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -83,7 +84,7 @@ const Navbar = () => {
                                     to="/cart"
                                     className="-mx-3 block rounded-lg py-2 px-3 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
                                 >
-                                    <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                                    <CartBadge />
                                 </Link>
                             </div>
                         </div>

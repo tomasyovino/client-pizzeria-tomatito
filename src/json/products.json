@@ -1,5 +1,6 @@
 [
     {
+        "_id": "1",
         "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
         "category": "pizza",
         "name": "Pizza Muzzarela",
@@ -7,6 +8,7 @@
         "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
     },
     {
+        "_id": "2",
         "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
         "category": "pizza",
         "name": "Pizza Napolitana",
@@ -14,6 +16,7 @@
         "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
     },
     {
+        "_id": "3",
         "image": "https://media.ambito.com/p/a8c3fbc0f93536779622ae020f73412c/adjuntos/239/imagenes/040/482/0040482101/antonios-pizzajpg.jpg",
         "category": "pizza",
         "name": "Pizza c/ Jamón y Morrones",
@@ -21,6 +24,7 @@
         "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
     },
     {
+        "_id": "4",
         "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
         "category": "pie",
         "name": "Empanada de J&Q",
@@ -28,6 +32,7 @@
         "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
     },
     {
+        "_id": "5",
         "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
         "category": "pie",
         "name": "Empanada de Pollo",
@@ -35,6 +40,7 @@
         "description": "Lorem ipsum, dolor sit amet consectetur adipisicing elit."
     },
     {
+        "_id": "6",
         "image": "https://www.paulinacocina.net/wp-content/uploads/2022/01/empanadas-saltenas.jpg",
         "category": "pie",
         "name": "Empanada de Carne",

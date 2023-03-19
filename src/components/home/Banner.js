@@ -24,10 +24,10 @@ const Banner = () => {
                 className="container mx-auto px-2 md:px-8 z-10 relative text-white flex justify-between items-center"
             >
                 <div>
-                    <img src={fork} alt="fork" />
+                    <img src={fork} alt="fork" className="z-10" />
                 </div>
                 <div className="flex flex-col items-center justify-center w-full mx-8">
-                    <img src={frill} alt="frill" />
+                    <img src={frill} alt="frill" className="z-10" />
                     <h1 className="text-4xl lg:text-9xl font-semibold">TOMATITO</h1>
                     <a href="#menu" className="border border-[#ff770f] text-[#ff770f] p-3 rounded mt-14 text-md font-semibold leading-6 transition ease-in-out hover:-translate-y-1 hover:scale-110 duration-300">Ver Menú</a>
                     <div className="container mx-auto flex items-center justify-center lg:justify-between mt-6 gap-4">
@@ -37,7 +37,7 @@ const Banner = () => {
                     </div>
                 </div>
                 <div>
-                    <img src={knife} alt="knife" />
+                    <img src={knife} alt="knife" className="z-10" />
                 </div>
             </div>
         </section>

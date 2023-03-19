@@ -1,10 +1,14 @@
+import React from "react";
 import { useEffect, useState } from "react";
+import { Modal } from "../";
 import parcelli from "../../assets/parcelli.webp";
 import productsData from "../../json/products.json";
 
 const Menu = () => {
     const [products, setProducts] = useState([]);
     const [categorySelected, setCategorySelected] = useState("pizza");
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
         // const fetchProducts = async (url) => {
@@ -60,19 +64,33 @@ const Menu = () => {
                 <div className="flex flex-col flex-wrap items-center justify-between gap-y-8 md:flex-row">
                     {
                         products &&
-                        products.sort((a, b) => a.price - b.price).map((product, i) => {
+                        products.sort((a, b) => a.price - b.price).map((product) => {
                             if (product.category === categorySelected) {
                                 return (
-                                    <div className="w-full md:w-[45%] px-8 flex" key={i}>
-                                        <img className="w-24 h-24 rounded-xl mr-4" src={product.image} alt={product.name} />
-                                        <div className="text-start">
-                                            <div className="flex flex-col sm:flex-row justify-between sm:items-center pb-2.5 text-xl">
-                                                <span>{product.name}</span>
-                                                <span className="text-[#ff770f]">${product.price}</span>
+                                    <React.Fragment key={product._id}>
+                                        <button
+                                            className="w-full md:w-[45%] px-8 flex"
+                                            onClick={() => {
+                                                setSelectedProduct(product);
+                                                setIsModalOpen(true);
+                                            }}
+                                        >
+                                            <img className="w-24 h-24 rounded-xl mr-4" src={product.image} alt={product.name} />
+                                            <div className="text-start">
+                                                <div className="flex flex-col sm:flex-row justify-between sm:items-center pb-2.5 text-xl">
+                                                    <span>{product.name}</span>
+                                                    <span className="text-[#ff770f]">${product.price}</span>
+                                                </div>
+                                                <p className="hidden sm:block">{product.description}</p>
                                             </div>
-                                            <p className="hidden sm:block">{product.description}</p>
-                                        </div>
-                                    </div>
+                                        </button>
+
+                                        <Modal
+                                            product={selectedProduct}
+                                            isOpen={isModalOpen}
+                                            setIsModalOpen={setIsModalOpen}
+                                        />
+                                    </React.Fragment>
                                 );
                             };
                             return null;
