@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import CartProvider from "./context/CartProvider";
 import { HomePage, CartPage, ContactPage, NotFoundPage } from "./pages";
-import { Footer, Navbar } from "./components";
+import { Footer, Navbar, ScrollToTop } from "./components";
 
 const App = () => {
   return (
     <Router>
       <CartProvider>
+        <ScrollToTop />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />} />
