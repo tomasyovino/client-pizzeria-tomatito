@@ -27,12 +27,50 @@ const CartProvider = ({ children }) => {
             setCart([...cart, product]);
         };
     };
+
+    const plusOneProduct = (productID) => {
+        const updatedCart = cart.map((product) => {
+            if (product._id === productID) {
+                if (product.quantity < 12) {
+                    return {
+                        ...product,
+                        quantity: product.quantity + 1
+                    };
+                };
+            };
+            return product;
+        });
+        setCart(updatedCart);
+    };
+
+    const minusOneProduct = (productID) => {
+        const updatedCart = cart.map((product) => {
+            if (product._id === productID) {
+                if (product.quantity > 1) {
+                    return {
+                        ...product,
+                        quantity: product.quantity - 1
+                    };
+                };
+            };
+            return product;
+        });
+        setCart(updatedCart);
+    };
+
+    const removeFromCart = (productID) => {
+        const updatedCart = cart.filter((product) => product._id !== productID);
+        setCart(updatedCart);
+    };
     
     return <CartContext.Provider
         value={{
             cart,
             setCart,
-            addToCart
+            addToCart,
+            plusOneProduct,
+            minusOneProduct,
+            removeFromCart
         }}
     >
         { children }

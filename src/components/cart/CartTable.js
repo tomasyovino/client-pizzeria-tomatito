@@ -1,6 +1,7 @@
+import React from 'react';
 import { PlusIcon, MinusIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-const CartTable = ({ cart }) => {
+const CartTable = ({ cart, plusOneProduct, minusOneProduct, removeFromCart }) => {
     return (
         <div className='w-full md:w-3/4 bg-white px-10 py-10'>
             <div className='flex justify-between border-b pb-8'>
@@ -15,7 +16,7 @@ const CartTable = ({ cart }) => {
             </div>
             {
                 cart.map((product) => (
-                    <>
+                    <React.Fragment key={product._id}>
                         <div className='hidden md:flex items-center hover:bg-gray-100 -mx-8 px-6 py-5'>
                             <div className='flex w-2/5'>
                                 <div className='w-20'>
@@ -27,17 +28,17 @@ const CartTable = ({ cart }) => {
                                 </div>
                             </div>
                             <div className='flex justify-center w-1/5'>
-                                <button>
+                                <button onClick={() => minusOneProduct(product._id)}>
                                     <MinusIcon className='fill-current text-gray-600 w-3' />
                                 </button>
                                 <span className='mx-2 border text-center w-8'>{product.quantity}</span>
-                                <button>
+                                <button onClick={() => plusOneProduct(product._id)}>
                                     <PlusIcon className='fill-current text-gray-600 w-3' />
                                 </button>
                             </div>
                             <span className='text-center w-1/5 font-semibold text-sm'>${product.price}</span>
                             <div className='w-1/5 text-center'>
-                                <button>
+                                <button onClick={() => removeFromCart(product._id)}>
                                     <XMarkIcon className='fill-current w-6 font-semibold hover:text-red-500 text-gray-500 text-xs' />
                                 </button>
                             </div>
@@ -51,20 +52,20 @@ const CartTable = ({ cart }) => {
                             </div>
                             <div className='flex justify-between ml-2 flex-grow'>
                                 <div className='flex items-center'>
-                                    <button>
+                                    <button onClick={() => minusOneProduct(product._id)}>
                                         <MinusIcon className='fill-current text-gray-600 w-6' />
                                     </button>
                                     <span className='mx-2 border text-center w-8'>{product.quantity}</span>
-                                    <button>
+                                    <button onClick={() => plusOneProduct(product._id)}>
                                         <PlusIcon className='fill-current text-gray-600 w-6' />
                                     </button>
                                 </div>
-                                <button>
+                                <button onClick={() => removeFromCart(product._id)}>
                                     <XMarkIcon className='fill-current w-6 font-semibold hover:text-red-500 text-gray-500' />
                                 </button>
                             </div>
                         </div>
-                    </>
+                    </React.Fragment>
                 ))
             }
         </div>
