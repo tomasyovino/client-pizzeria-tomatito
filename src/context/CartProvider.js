@@ -10,6 +10,10 @@ const CartProvider = ({ children }) => {
         if (cartInfo) setCart(cartInfo);
     }, []);
 
+    useEffect(() => {
+        if(cart.length >= 1) localStorage.setItem("cartInfo", JSON.stringify(cart));
+    }, [cart]);
+
     const addToCart = (product) => {
         const existingProduct = cart.find((p) => p._id === product._id);
         if (existingProduct) {
@@ -26,6 +30,7 @@ const CartProvider = ({ children }) => {
         } else {
             setCart([...cart, product]);
         };
+        localStorage.setItem("cartInfo", JSON.stringify(cart));
     };
 
     const plusOneProduct = (productID) => {
@@ -61,6 +66,7 @@ const CartProvider = ({ children }) => {
     const removeFromCart = (productID) => {
         const updatedCart = cart.filter((product) => product._id !== productID);
         setCart(updatedCart);
+        localStorage.setItem("cartInfo", JSON.stringify(updatedCart));
     };
     
     return <CartContext.Provider
