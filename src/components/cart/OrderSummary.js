@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const OrderSummary = ({ cart, shipping }) => {
+const OrderSummary = ({ cart, emptyCart, shipping }) => {
     const [name, setName] = useState("");
     const [direction, setDirection] = useState("");
     const [streets, setStreets] = useState("");
     const [payWith, setPayWith] = useState("");
     const [orderForm, setOrderForm] = useState(null);
+    const [payMethod, setPayMethod] = useState(null);
     const [error, setError] = useState({});
 
     const productsTotal = cart.reduce((total, product) => total + (product.price * product.quantity), 0);
@@ -17,7 +18,8 @@ const OrderSummary = ({ cart, shipping }) => {
         if (!name) errors.name = "* Nombre es requerido";
         if (orderForm === "DELIVERY") {
             if (!direction) errors.direction = "* Dirección es requerida";
-            if (!payWith) errors.payWith = "* Abono es requerido";
+            if (payMethod === "EFECTIVO" && !payWith) errors.payWith = "* Abono es requerido";
+            if(payMethod === "EFECTIVO" && payWith < total) errors.payWithLess = `* Debe abonar con un monto igual o mayor al referido ($${total})`
         };
         setError(errors);
         return Object.keys(errors).length === 0;
@@ -27,6 +29,9 @@ const OrderSummary = ({ cart, shipping }) => {
         e.preventDefault();
         if (!orderForm) {
             return toast.error("Por favor, elija el formato de entrega");
+        };
+        if (!payMethod) {
+            return toast.error("Por favor, elija el método de pago");
         };
         if (!validate()) return;
         
@@ -41,8 +46,16 @@ const OrderSummary = ({ cart, shipping }) => {
             //     body: order
             // });
             // const response = await data.json();
+            emptyCart()
         } catch (error) {
             console.log(error);
+        } finally {
+            setOrderForm(null);
+            setPayMethod(null);
+            setName("");
+            setDirection("");
+            setStreets("");
+            setPayWith("");
         };
     };
 
@@ -51,8 +64,8 @@ const OrderSummary = ({ cart, shipping }) => {
         const productDetails = products.map((product) => ` ${product.quantity} x ${product.name}`);
 
         const message = orderForm === "DELIVERY"
-            ? `¡Hola! Este es el pedido 11111 de *DELIVERY* para el local *Tomatito*\n\nDirección de envío: ${direction}\nEntrecalles: ${streets}\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n${productDetails}\n\n*Subtotal: $${productsTotal}*\n\nEnvío: $${parseInt(shipping)}\n\n*Total: $${amount}*\n\nAbono en efectivo con: $${payWith}\n\nVuelto: $${payWith - amount}`
-            : `¡Hola! Este es el pedido 11111 de *TAKE AWAY* para el local *Tomatito*\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n ${productDetails}\n\n*Subtotal: $${productsTotal}*\n\n*Total: $${amount}*`;
+            ? `¡Hola! Este es el pedido 11111 de *DELIVERY* para el local *Tomatito*\n\nDirección de envío: ${direction}\nEntrecalles: ${streets}\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n${productDetails}\n\n*Subtotal: $${productsTotal}*\n\nEnvío: $${parseInt(shipping)}\n\n*Total: $${amount}*\n\nAbono en *${payMethod}* ${payMethod === "EFECTIVO" ? `con: $${payWith}\n\nVuelto: $${payWith - amount}` : ""}`
+            : `¡Hola! Este es el pedido 11111 de *TAKE AWAY* para el local *Tomatito*\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n ${productDetails}\n\n*Subtotal: $${productsTotal}*\n\n*Total: $${amount}*\n\nAbono en *${payMethod}*`;
         
         window.open(`https://wa.me/${process.env.REACT_APP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`);
     };
@@ -60,7 +73,8 @@ const OrderSummary = ({ cart, shipping }) => {
     return (
         <form className='w-full md:w-1/4 px-8 py-10'>
             <h1 className='font-semibold text-2xl border-b pb-8'>Resumen del pedido</h1>
-            <div className='flex justify-around items-center my-10'>
+            {/* BUTTONS */}
+            <div className='flex justify-between items-center my-10'>
                 <button 
                     type="button"
                     className={
@@ -84,6 +98,31 @@ const OrderSummary = ({ cart, shipping }) => {
                     DELIVERY
                 </button>
             </div>
+            <div className='flex justify-between items-center my-10'>
+                <button 
+                    type="button"
+                    className={
+                        payMethod === "EFECTIVO"
+                            ?   'font-semibold p-1.5 rounded-lg text-white text-sm uppercase border-2 border-[#2bbf66] bg-[#2bbf66]'
+                            :   'font-semibold p-1.5 rounded-lg text-[#2bbf66] text-sm uppercase border-2 border-[#2bbf66] bg-transparent'
+                    }
+                    onClick={() => setPayMethod("EFECTIVO")}
+                >
+                    Efectivo
+                </button>
+                <button 
+                    type="button"
+                    className={
+                        payMethod === "MERCADOPAGO"
+                            ?   'font-semibold p-1.5 rounded-lg text-white text-sm uppercase border-2 border-[#2bbf66] bg-[#2bbf66]'
+                            : 'font-semibold p-1.5 rounded-lg text-[#2bbf66] text-sm uppercase border-2 border-[#2bbf66] bg-transparent'
+                    }
+                    onClick={() => setPayMethod("MERCADOPAGO")}
+                >
+                    Mercado Pago
+                </button>
+            </div>
+            {/* ORDER */}
             <div className='flex justify-between items-center mb-5'>
                 <span className='font-semibold text-sm uppercase'>{cart.length} Productos</span>
                 <span className='font-semibold text-sm'>${productsTotal}</span>
@@ -143,7 +182,7 @@ const OrderSummary = ({ cart, shipping }) => {
                     <span>${total}</span>
                 </div>
                 {
-                    orderForm === "DELIVERY" && (
+                    orderForm === "DELIVERY" && payMethod === "EFECTIVO" && (
                         <div className='pt-3 pb-6'>
                             <div className="flex font-semibold justify-between items-center text-sm uppercase">
                                 <label>* Abono con:</label>
@@ -157,6 +196,10 @@ const OrderSummary = ({ cart, shipping }) => {
                             {
                                 error.payWith &&
                                     <p className="text-red-500 text-left w-full font-normal text-base leading-5">{error.payWith}</p>
+                            }
+                            {
+                                error.payWithLess &&
+                                    <p className="text-red-500 text-left w-full font-normal text-base leading-5">{error.payWithLess}</p>
                             }
                         </div>
                     )

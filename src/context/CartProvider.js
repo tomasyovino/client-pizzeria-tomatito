@@ -68,6 +68,12 @@ const CartProvider = ({ children }) => {
         setCart(updatedCart);
         localStorage.setItem("cartInfo", JSON.stringify(updatedCart));
     };
+
+    const emptyCart = () => {
+        const updatedCart = [];
+        setCart(updatedCart);
+        localStorage.setItem("cartInfo", JSON.stringify(updatedCart));
+    };
     
     return <CartContext.Provider
         value={{
@@ -76,7 +82,8 @@ const CartProvider = ({ children }) => {
             addToCart,
             plusOneProduct,
             minusOneProduct,
-            removeFromCart
+            removeFromCart,
+            emptyCart
         }}
     >
         { children }

@@ -2,7 +2,7 @@ import { CartState } from '../context/CartProvider';
 import { CartTable, EmptyCart, OrderSummary } from '../components';
 
 const CartPage = () => {
-    const { cart, plusOneProduct, minusOneProduct, removeFromCart } = CartState();
+    const { cart, emptyCart, plusOneProduct, minusOneProduct, removeFromCart } = CartState();
     const shipping = process.env.REACT_APP_SHIPPING;
 
     return (
@@ -16,7 +16,11 @@ const CartPage = () => {
                             minusOneProduct={minusOneProduct}
                             removeFromCart={removeFromCart}
                         />
-                        <OrderSummary cart={cart} shipping={shipping} />
+                        <OrderSummary
+                            cart={cart}
+                            emptyCart={emptyCart}
+                            shipping={shipping}
+                        />
                     </>
                     : <EmptyCart />
             }
