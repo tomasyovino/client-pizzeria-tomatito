@@ -36,7 +36,7 @@ const CartProvider = ({ children }) => {
     const plusOneProduct = (productID) => {
         const updatedCart = cart.map((product) => {
             if (product._id === productID) {
-                if (product.quantity < 12) {
+                if (product.quantity < 36) {
                     return {
                         ...product,
                         quantity: product.quantity + 1
