@@ -1,8 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { Modal } from "../";
 import parcelli from "../../assets/parcelli.webp";
-import productsData from "../../json/products.json";
+import { API_BASE_URL } from "../../config";
 
 const Menu = () => {
     const [products, setProducts] = useState([]);
@@ -11,18 +12,16 @@ const Menu = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
-        // const fetchProducts = async (url) => {
-        //     try {
-        //         const response = await fetch(url);
-        //         const data = await response.json();
-
-        //         setProducts(data);
-        //     } catch (error) {
-        //         console.log(error);
-        //     };
-        // };
-        // fetchProducts()
-        setProducts(productsData)
+        fetch(`${API_BASE_URL}/api/products`)
+            .then(res => {
+                if (!res.ok) throw new Error("Error fetching products");
+                return res.json();
+            })
+            .then(data => setProducts(data))
+            .catch(err => {
+                console.log(err);
+                toast.error("Error al buscar productos");
+            });
     }, []);
 
     return (

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { API_BASE_URL, PHONE_NUMBER } from "../../config";
 
 const OrderSummary = ({ cart, emptyCart, shipping }) => {
     const [name, setName] = useState("");
@@ -25,7 +26,7 @@ const OrderSummary = ({ cart, emptyCart, shipping }) => {
         return Object.keys(errors).length === 0;
     };
 
-    const sendOrder = async (e, order) => {
+    const handleSubmit = async (e, order) => {
         e.preventDefault();
         if (!orderForm) {
             return toast.error("Por favor, elija el formato de entrega");
@@ -36,18 +37,20 @@ const OrderSummary = ({ cart, emptyCart, shipping }) => {
         if (!validate()) return;
         
         try {
-            sendMessage(order);
-            // const data = await fetch(process.env.REACT_APP_BASE_URL, {
-            //     headers: {
-            //         'Accept': 'application/json',
-            //         'Content-Type': 'application/json'
-            //     },
-            //     method: "POST",
-            //     body: order
-            // });
-            // const response = await data.json();
-            emptyCart()
+            const { direction, payWith, payMethod, products, amount } = order;
+            
+            await fetch(`${API_BASE_URL}/api/orders`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify({direction, payWith, payMethod, products, amount})
+            });
+
+            sendMessage(direction, payWith, payMethod, products, amount);
+            emptyCart();
         } catch (error) {
+            toast.error("Error al crear su orden");
             console.log(error);
         } finally {
             setOrderForm(null);
@@ -59,19 +62,27 @@ const OrderSummary = ({ cart, emptyCart, shipping }) => {
         };
     };
 
-    const sendMessage = (order) => {
-        const { direction, payWith, products, amount } = order;
+    const sendMessage = (direction, payWith, payMethod, products, amount) => {
         const productDetails = products.map((product) => ` ${product.quantity} x ${product.name}`);
 
         const message = orderForm === "DELIVERY"
             ? `¡Hola! Este es el pedido 11111 de *DELIVERY* para el local *Tomatito*\n\nDirección de envío: ${direction}\nEntrecalles: ${streets}\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n${productDetails}\n\n*Subtotal: $${productsTotal}*\n\nEnvío: $${parseInt(shipping)}\n\n*Total: $${amount}*\n\nAbono en *${payMethod}* ${payMethod === "EFECTIVO" ? `con: $${payWith}\n\nVuelto: $${payWith - amount}` : ""}`
             : `¡Hola! Este es el pedido 11111 de *TAKE AWAY* para el local *Tomatito*\n\nA nombre de: *${name}*\nDetalle del pedido:\n\n ${productDetails}\n\n*Subtotal: $${productsTotal}*\n\n*Total: $${amount}*\n\nAbono en *${payMethod}*`;
         
-        window.open(`https://wa.me/${process.env.REACT_APP_PHONE_NUMBER}?text=${encodeURIComponent(message)}`);
+        window.open(`https://wa.me/${PHONE_NUMBER}?text=${encodeURIComponent(message)}`);
     };
 
     return (
-        <form className='w-full md:w-1/4 px-8 py-10'>
+        <form
+            className='w-full md:w-1/4 px-8 py-10'
+            onSubmit={(e) => handleSubmit(e, {
+                products: cart,
+                amount: total,
+                direction,
+                payWith,
+                payMethod
+            })}
+        >
             <h1 className='font-semibold text-2xl border-b pb-8'>Resumen del pedido</h1>
             {/* BUTTONS */}
             <div className='flex justify-between items-center my-10'>
@@ -207,12 +218,6 @@ const OrderSummary = ({ cart, emptyCart, shipping }) => {
                 <button
                     className='bg-yellow-500 font-semibold hover:bg-yellow-600 py-3 text-sm text-white uppercase w-full'
                     type="submit"
-                    onClick={(e) => sendOrder(e, {
-                        products: cart,
-                        amount: total,
-                        direction: direction,
-                        payWith: payWith
-                    })}
                 >
                     Hacer Pedido
                 </button>
