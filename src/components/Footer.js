@@ -1,8 +1,8 @@
-import footerImage from "../assets/prepare-dish-image.jpg"
+import footerImage from "../assets/prepare-dish-image.jpg";
+import { PHONE_NUMBER } from "../config";
 
 const Footer = () => {
-    const phoneNumber = process.env.REACT_APP_PHONE_NUMBER;
-    const phoneNumberStr = phoneNumber.toString();
+    const phoneNumberStr = PHONE_NUMBER.toString();
     const firstPart = phoneNumberStr.substring(0, 2);
     const secondPart = phoneNumberStr.substring(2, 6);
     const thirdPart = phoneNumberStr.substring(6);
