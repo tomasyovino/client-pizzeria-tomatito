@@ -10,15 +10,13 @@ const HomePage = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-        const scrollTop = window.scrollY;
-        if (scrollTop > window.innerHeight && cart.length > 0) {
+        if (cart.length > 0) {
             setShowBadge(true);
         } else {
             setShowBadge(false);
         }
         };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+        handleScroll();
     }, [cart]);
 
     return (
